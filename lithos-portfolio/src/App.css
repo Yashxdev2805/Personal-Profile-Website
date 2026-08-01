@@ -1,0 +1,66 @@
+/* ---- Horizontal rolling skills marquee ---- */
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  width: max-content;
+  animation: marqueeScroll 24s linear infinite;
+}
+.marquee-wrap:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ---- Continuous animated border-color (not hover-only) ---- */
+@keyframes borderCycle {
+  0%, 100% { border-color: #e8702a; box-shadow: 0 0 20px 0 rgba(232, 112, 42, 0.35); }
+  33%      { border-color: #f2b705; box-shadow: 0 0 20px 0 rgba(242, 183, 5, 0.35); }
+  66%      { border-color: #ff5da2; box-shadow: 0 0 20px 0 rgba(255, 93, 162, 0.35); }
+}
+.animated-border {
+  animation: borderCycle 5s ease-in-out infinite;
+}
+
+/* ---- Visitor gate enter/exit ---- */
+@keyframes gateIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes gateOut {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(1.04); }
+}
+.gate-enter { animation: gateIn 0.5s ease-out forwards; }
+.gate-exit  { animation: gateOut 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .animated-border,
+  .gate-enter,
+  .gate-exit {
+    animation: none;
+  }
+  .animated-border { border-color: #e8702a; }
+}
+
+/* ---- Print-only resume (hidden on screen, shown via window.print()) ---- */
+.print-resume {
+  display: none;
+}
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-resume,
+  .print-resume * {
+    visibility: visible;
+  }
+  .print-resume {
+    display: block;
+    position: absolute;
+    inset: 0;
+    padding: 48px;
+    color: #000;
+    background: #fff;
+  }
+}
